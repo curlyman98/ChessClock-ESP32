@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="280dp"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/side_menu">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/menu"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/text"
+        android:padding="16dp"/>
+
+    <Button
+        android:id="@+id/gamesButtonDrawer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/stored_games"
+        android:textColor="@color/text"
+        android:backgroundTint="@color/list_item_background"
+        app:cornerRadius="100dp"/>
+
+    <Button
+        android:id="@+id/pairingButtonDrawer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/pairing"
+        android:textColor="@color/text"
+        android:backgroundTint="@color/list_item_background"
+        app:cornerRadius="100dp"/>
+
+    <Button
+        android:id="@+id/settingsButtonDrawer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/settings"
+        android:textColor="@color/text"
+        android:backgroundTint="@color/list_item_background"
+        app:cornerRadius="100dp"/>
+
+</LinearLayout>

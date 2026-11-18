@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <!-- Game name; wraps onto at most 3 lines, so the moves below keep their space -->
+
+    <TextView
+        android:id="@+id/gameTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:text="@string/placeholder"
+        android:textColor="@color/text"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/editGameButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Opens the game details popup (name, site, date, round, result) -->
+
+    <ImageButton
+        android:id="@+id/editGameButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/edit_game_details"
+        android:padding="12dp"
+        android:src="@drawable/ic_edit"
+        app:tint="@color/text"
+        app:layout_constraintEnd_toStartOf="@id/deleteGameButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Deletes the game after asking -->
+
+    <ImageButton
+        android:id="@+id/deleteGameButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="12dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/delete_game"
+        android:padding="12dp"
+        android:src="@drawable/ic_delete"
+        app:tint="@color/text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Date and time the game was created -->
+
+    <TextView
+        android:id="@+id/gameDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/text"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@id/gameTitle"
+        app:layout_constraintTop_toBottomOf="@id/gameTitle" />
+
+    <!-- Chess board; dimensionRatio 1:1 makes it as tall as it is wide -->
+
+    <com.example.chess_clock_app.views.ChessBoardView
+        android:id="@+id/chessBoard"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gameDate" />
+
+    <!-- Player names above the move columns; each name sits right above its moves -->
+
+    <TextView
+        android:id="@+id/whitePlayer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/pill_background"
+        android:clickable="true"
+        android:ellipsize="end"
+        android:focusable="true"
+        android:gravity="center"
+        android:maxLines="1"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:textColor="@color/text"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/blackPlayer"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/chessBoard" />
+
+    <TextView
+        android:id="@+id/blackPlayer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/pill_background"
+        android:clickable="true"
+        android:ellipsize="end"
+        android:focusable="true"
+        android:gravity="center"
+        android:maxLines="1"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:textColor="@color/text"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@id/whitePlayer"
+        app:layout_constraintTop_toTopOf="@id/whitePlayer" />
+
+    <!-- Moves with their clock times, one row per move pair -->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/movesRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintBottom_toTopOf="@id/saveMovesButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/whitePlayer" />
+
+    <!-- Displayed over the moves area if there are no moves or clock times -->
+
+    <TextView
+        android:id="@+id/noMovesText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_moves"
+        android:textColor="@color/text"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/movesRecyclerView"
+        app:layout_constraintEnd_toEndOf="@id/movesRecyclerView"
+        app:layout_constraintStart_toStartOf="@id/movesRecyclerView"
+        app:layout_constraintTop_toTopOf="@id/movesRecyclerView" />
+
+    <!-- Previous move -->
+
+    <Button
+        android:id="@+id/previousMoveButton"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:backgroundTint="@color/list_item_background"
+        android:contentDescription="@string/previous_move"
+        app:icon="@drawable/arrow_left"
+        app:iconGravity="textStart"
+        app:iconPadding="0dp"
+        app:iconTint="@color/text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/saveMovesButton"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Saves moves, name and players -->
+
+    <Button
+        android:id="@+id/saveMovesButton"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:backgroundTint="@color/list_item_background"
+        android:text="@string/save"
+        android:textColor="@color/text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/nextMoveButton"
+        app:layout_constraintStart_toEndOf="@id/previousMoveButton" />
+
+    <!-- Next move; the same arrow as the left button, mirrored -->
+
+    <Button
+        android:id="@+id/nextMoveButton"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:backgroundTint="@color/list_item_background"
+        android:contentDescription="@string/next_move"
+        android:scaleX="-1"
+        app:icon="@drawable/arrow_left"
+        app:iconGravity="textStart"
+        app:iconPadding="0dp"
+        app:iconTint="@color/text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/saveMovesButton" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

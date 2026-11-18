@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <!-- Device name; wraps onto at most 2 lines -->
+
+    <TextView
+        android:id="@+id/deviceTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="@string/device_placeholder"
+        android:textColor="@color/text"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/renameDeviceButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Opens a popup to rename the device -->
+
+    <ImageButton
+        android:id="@+id/renameDeviceButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/rename_device"
+        android:padding="12dp"
+        android:src="@drawable/ic_edit"
+        app:tint="@color/text"
+        app:layout_constraintEnd_toStartOf="@id/forgetDeviceButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Forgets the device after asking; its games are kept -->
+
+    <ImageButton
+        android:id="@+id/forgetDeviceButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="12dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/forget_device"
+        android:padding="12dp"
+        android:src="@drawable/ic_delete"
+        app:tint="@color/text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- MAC address; tapping it copies it -->
+
+    <TextView
+        android:id="@+id/deviceMac"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:textColor="@color/text"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@id/deviceTitle"
+        app:layout_constraintTop_toBottomOf="@id/deviceTitle" />
+
+    <!-- When the app was last connected to the device -->
+
+    <TextView
+        android:id="@+id/lastConnected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:textColor="@color/text"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@id/deviceTitle"
+        app:layout_constraintTop_toBottomOf="@id/deviceMac" />
+
+    <!-- When games were last synced from the device -->
+
+    <TextView
+        android:id="@+id/lastSynced"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/text"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@id/deviceTitle"
+        app:layout_constraintTop_toBottomOf="@id/lastConnected" />
+
+    <!-- Games waiting on the clock, as of the last connection -->
+
+    <TextView
+        android:id="@+id/gamesOnClock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/text"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@id/deviceTitle"
+        app:layout_constraintTop_toBottomOf="@id/lastSynced" />
+
+    <!-- Imported games heading -->
+
+    <TextView
+        android:id="@+id/deviceGamesTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/device_games"
+        android:textColor="@color/text"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gamesOnClock" />
+
+    <!-- Games imported from this device; tapping one opens it -->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/deviceGamesRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:clipToPadding="false"
+        android:paddingBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@id/syncingIndicator"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/deviceGamesTitle" />
+
+    <!-- Displayed over the games area if the list is empty -->
+
+    <TextView
+        android:id="@+id/noDeviceGamesText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_device_games"
+        android:textColor="@color/text"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/deviceGamesRecyclerView"
+        app:layout_constraintEnd_toEndOf="@id/deviceGamesRecyclerView"
+        app:layout_constraintStart_toStartOf="@id/deviceGamesRecyclerView"
+        app:layout_constraintTop_toTopOf="@id/deviceGamesRecyclerView" />
+
+
+    <!-- Loading animation -->
+
+    <ProgressBar
+        android:id="@+id/syncingIndicator"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginBottom="12dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/syncButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Only enabled while this clock is connected -->
+
+    <Button
+        android:id="@+id/syncButton"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:backgroundTint="@color/list_item_background"
+        android:text="@string/sync"
+        android:textColor="@color/text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
